@@ -132,7 +132,7 @@ def summarize_text(cuts, waste):
     out.write("\nPatrones (por barra):\n")
     for i, c in enumerate(cuts,1):
         out.write(f" {i:2d}: " + " + ".join(f"{x:.3f}" for x in c) + f"  => total {sum(c):.3f} m, waste {STOCK_LEN - sum(c):.3f} m\n")
->>>>>>> e9d5f6b7847ea9ae94c54fc88535513aa650c78c
+    e9d5f6b7847ea9ae94c54fc88535513aa650c78c
     total_waste = sum(STOCK_LEN - sum(c) for c in cuts)
     out.write(f"\nDesperdicio total acumulado: {total_waste:.3f} m\n")
     return out.getvalue()
