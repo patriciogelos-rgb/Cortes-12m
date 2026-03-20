@@ -99,41 +99,26 @@ def summarize_text(cuts, waste):
             
     out.write("Piezas obtenidas (largo : cantidad):\n")
     
-    # Ahora resumimos el total por largo
-    total_bars = Counter()
-    for length, quantity in cnt.items():
-        total_bars[length] += quantity
-
-    # Formateamos el resultado
-    for L, q in sorted(total_bars.items()):
-        out.write(f"  {L:.3f} m : {q}\n")  # Resumen de piezas
-    
-    out.write("\nPatrones (por barra):\n")
-    bar_summary = Counter()  # Usaremos esto para resumir las barras cortadas
-
-    # Generar detalle de patrones y contar repeticiones
-    for i, c in enumerate(cuts, 1):
-        cut_details = " + ".join(f"{x:.3f}" for x in c)
-        out.write(f" {i:2d}: " + cut_details + f"  => total {sum(c):.3f} m, waste {STOCK_LEN - sum(c):.3f} m\n")
-        bar_summary[tuple(c)] += 1  # Contar cada patrón
-
-    out.write("\nResumen de cortado:\n")
-    for cuts_pattern, count in bar_summary.items():
-        cut_details = " + ".join(f"{x:.3f}" for x in cuts_pattern)
-        out.write(f"  {cut_details}  x{count}\n")  # Mostrar patrón y su cantidad
-
-    cnt = Counter()
-    for c in cuts:
-        for p in c:
-            cnt[round(p,6)] += 1
-    out.write("Piezas obtenidas (largo : cantidad):\n")
+    # Resumir el total por largo
     for L, q in sorted(cnt.items()):
         out.write(f"  {L:.3f} m : {q}\n")
+    
     out.write("\nPatrones (por barra):\n")
-    for i, c in enumerate(cuts,1):
-        out.write(f" {i:2d}: " + " + ".join(f"{x:.3f}" for x in c) + f"  => total {sum(c):.3f} m, waste {STOCK_LEN - sum(c):.3f} m\n")
+    bar_summary = Counter()  # Usar esta estructura para contar patrones
+
+    # Generar detalle de patrones y contar repeticiones
+    for c in cuts:
+        cut_details = " + ".join(f"{x:.3f}" for x in c)
+        bar_summary[cut_details] += 1  # Contar patrones
+
+    # Resumir los patrones únicos
+    for pattern, count in bar_summary.items():
+        out.write(f"{pattern}  x{count}\n")  # Mostrar patrón y su cantidad
+
+    # Calcular desperdicio total acumulado
     total_waste = sum(STOCK_LEN - sum(c) for c in cuts)
     out.write(f"\nDesperdicio total acumulado: {total_waste:.3f} m\n")
+
     return out.getvalue()
 
 def export_csv_bytes(cuts):
