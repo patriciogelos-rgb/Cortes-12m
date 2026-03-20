@@ -122,6 +122,17 @@ def summarize_text(cuts, waste):
         cut_details = " + ".join(f"{x:.3f}" for x in cuts_pattern)
         out.write(f"  {cut_details}  x{count}\n")  # Mostrar patrón y su cantidad
 
+    cnt = Counter()
+    for c in cuts:
+        for p in c:
+            cnt[round(p,6)] += 1
+    out.write("Piezas obtenidas (largo : cantidad):\n")
+    for L, q in sorted(cnt.items()):
+        out.write(f"  {L:.3f} m : {q}\n")
+    out.write("\nPatrones (por barra):\n")
+    for i, c in enumerate(cuts,1):
+        out.write(f" {i:2d}: " + " + ".join(f"{x:.3f}" for x in c) + f"  => total {sum(c):.3f} m, waste {STOCK_LEN - sum(c):.3f} m\n")
+>>>>>>> e9d5f6b7847ea9ae94c54fc88535513aa650c78c
     total_waste = sum(STOCK_LEN - sum(c) for c in cuts)
     out.write(f"\nDesperdicio total acumulado: {total_waste:.3f} m\n")
     return out.getvalue()

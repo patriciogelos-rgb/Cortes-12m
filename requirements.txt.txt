@@ -1,0 +1,2 @@
+streamlit
+pulp==3.3.0
