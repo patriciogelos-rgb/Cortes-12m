@@ -5,11 +5,11 @@ STOCK_LEN = 12.0
 EPS = 1e-9
 
 st.title("Optimizador cortes - Barras 12.0 m (local)")
-st.markdown("Pegá aquí cada línea: largo (m), cantidad  — ejemplo: 1.57,20")
+st.markdown("Pegá aquí cada línea: largo (m), cantidad  — ejemplo: 10*1.50")
 
-input_text = st.text_area("Entradas (cantidadlargo) por línea — ejemplo: 102.5 ó 1.57,20", height=200, value="201.57\n158.60\n64.26\n203.27")
+input_text = st.text_area("Entradas (cantidadlargo) por línea — ejemplo: 10*1.5", height=200, value="10*1.5\n10*1.20")
 use_pulp = st.checkbox("Intentar solución óptima con PuLP (si está instalado)", value=True)
-max_patterns = st.number_input("Máx patrones a generar (PuLP)", min_value=50, max_value=2000, value=500, step=50)
+max_patterns = st.number_input("Máx patrones a generar (PuLP)", min_value=100, max_value=10000, value=3000, step=100)
 
 def parse_input(txt):
     dem = []
